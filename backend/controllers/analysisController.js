@@ -26,10 +26,11 @@ class AnalysisController {
         });
       }
       
-      // Get JSON structure, model, and optional user API key from request body
+      // Get JSON structure, model, custom prompt, and optional user API key from request body
       const jsonStructure = req.body.jsonStructure;
       const modelName = req.body.model;
       const userApiKey = req.body.userApiKey;
+      const customPrompt = req.body.customPrompt;
       
       // Validate JSON structure if provided
       if (jsonStructure) {
@@ -50,6 +51,7 @@ class AnalysisController {
         size: req.file.size,
         mimetype: req.file.mimetype,
         hasJsonStructure: !!jsonStructure,
+        hasCustomPrompt: !!customPrompt,
         modelName: modelName || 'default',
         hasUserApiKey: !!userApiKey,
         clientIP: req.ip
@@ -61,7 +63,8 @@ class AnalysisController {
         req.file.mimetype,
         jsonStructure,
         modelName,
-        userApiKey
+        userApiKey,
+        customPrompt
       );
       
       const processingTime = Date.now() - startTime;
@@ -94,6 +97,7 @@ class AnalysisController {
         processingTime: `${processingTime}ms`,
         filename: req.file?.originalname,
         hasUserApiKey: !!req.body.userApiKey,
+        hasCustomPrompt: !!req.body.customPrompt,
         clientIP: req.ip
       });
       
@@ -190,7 +194,8 @@ class AnalysisController {
             image: '必需 - 圖片檔案 (multipart/form-data)',
             jsonStructure: '可選 - 指定返回的 JSON 結構',
             model: '可選 - 指定要使用的 Gemini 模型',
-            userApiKey: '可選 - 用戶自定義的 Gemini API Key'
+            userApiKey: '可選 - 用戶自定義的 Gemini API Key',
+            customPrompt: '可選 - 自定義的分析提示詞'
           }
         },
         models: {

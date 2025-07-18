@@ -11,6 +11,7 @@ const MainContent = () => {
     apiKey,
     selectedModel,
     jsonSchema,
+    customPrompt,
     results,
     isLoading,
     error,
@@ -41,16 +42,18 @@ const MainContent = () => {
         imageName: uploadedImage.name,
         imageSize: uploadedImage.size,
         hasJsonSchema: !!jsonSchema.trim(),
+        hasCustomPrompt: !!customPrompt.trim(),
         selectedModel: selectedModel || 'default',
         hasUserApiKey: !!apiKey
       });
 
-      // Call the API with selected model and user API key
+      // Call the API with selected model, user API key, and custom prompt
       const response = await apiService.analyzeImage(
         uploadedImage.file, 
         jsonSchema, 
         selectedModel,
-        apiKey
+        apiKey,
+        customPrompt
       );
       
       // Set the results

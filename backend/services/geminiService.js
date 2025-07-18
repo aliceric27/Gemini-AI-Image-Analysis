@@ -9,17 +9,18 @@ class GeminiService {
   }
 
   /**
-   * Analyze image with optional JSON structure specification
+   * Analyze image with optional JSON structure specification and custom prompt
    * @param {Buffer} imageBuffer - The image buffer
    * @param {string} mimeType - The MIME type of the image
    * @param {string} jsonStructure - Optional JSON structure specification
    * @param {string} modelName - Optional specific model to use
    * @param {string} userApiKey - Optional user-provided API key
+   * @param {string} customPrompt - Optional custom prompt to override default prompts
    * @returns {Promise<Object>} Analysis result
    */
-  async analyzeImage(imageBuffer, mimeType, jsonStructure = null, modelName = null, userApiKey = null) {
+  async analyzeImage(imageBuffer, mimeType, jsonStructure = null, modelName = null, userApiKey = null, customPrompt = null) {
     // Use the new analyzeImageWithModel method
-    return this.analyzeImageWithModel(imageBuffer, mimeType, jsonStructure, modelName, userApiKey);
+    return this.analyzeImageWithModel(imageBuffer, mimeType, jsonStructure, modelName, userApiKey, customPrompt);
   }
   
   /**
@@ -409,15 +410,16 @@ ${jsonStructure}
   }
   
   /**
-   * Analyze image with specific model
+   * Analyze image with specific model and custom prompt
    * @param {Buffer} imageBuffer - The image buffer
    * @param {string} mimeType - The MIME type of the image
    * @param {string} jsonStructure - Optional JSON structure specification
    * @param {string} modelName - Optional specific model to use
    * @param {string} userApiKey - Optional user-provided API key
+   * @param {string} customPrompt - Optional custom prompt to override default prompts
    * @returns {Promise<Object>} Analysis result
    */
-  async analyzeImageWithModel(imageBuffer, mimeType, jsonStructure = null, modelName = null, userApiKey = null) {
+  async analyzeImageWithModel(imageBuffer, mimeType, jsonStructure = null, modelName = null, userApiKey = null, customPrompt = null) {
     try {
       logger.info('Starting image analysis with specific model', { 
         modelName, 
@@ -452,16 +454,22 @@ ${jsonStructure}
         }
       };
       
-      // Build prompt based on whether JSON structure is provided
+      // Build prompt based on custom prompt or JSON structure
       let prompt;
-      if (jsonStructure) {
+      if (customPrompt && customPrompt.trim()) {
+        // Use custom prompt if provided
+        prompt = customPrompt.trim();
+      } else if (jsonStructure) {
+        // Use structured prompt with JSON structure
         prompt = this.buildStructuredPrompt(jsonStructure);
       } else {
+        // Use general analysis prompt
         prompt = this.buildGeneralPrompt();
       }
       
       logger.info('Sending request to Gemini API', {
         hasJsonStructure: !!jsonStructure,
+        hasCustomPrompt: !!customPrompt,
         imageSize: imageBuffer.length,
         modelName: modelName || config.gemini.model,
         apiKeySource: userApiKey ? 'user' : 'server'
@@ -475,7 +483,7 @@ ${jsonStructure}
       logger.info('Received response from Gemini API');
       
       // Parse and validate response
-      return this.parseResponse(text, jsonStructure);
+      return this.parseResponse(text, jsonStructure || customPrompt);
       
     } catch (error) {
       logger.error('Error in Gemini API analysis:', {

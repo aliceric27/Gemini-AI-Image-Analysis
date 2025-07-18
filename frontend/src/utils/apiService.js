@@ -82,7 +82,7 @@ export const apiService = {
   },
 
   // Analyze image with Gemini API
-  async analyzeImage(imageFile, jsonSchema = '', selectedModel = null, userApiKey = null) {
+  async analyzeImage(imageFile, jsonSchema = '', selectedModel = null, userApiKey = null, customPrompt = null) {
     try {
       // Validate inputs
       if (!imageFile) {
@@ -112,6 +112,11 @@ export const apiService = {
       if (userApiKey && userApiKey.trim()) {
         formData.append('userApiKey', userApiKey);
       }
+      
+      // Add custom prompt if provided
+      if (customPrompt && customPrompt.trim()) {
+        formData.append('customPrompt', customPrompt);
+      }
 
       // Log request details
       console.log('Sending analyze request:', {
@@ -119,6 +124,7 @@ export const apiService = {
         fileSize: imageFile.size,
         fileType: imageFile.type,
         hasJsonSchema: !!jsonSchema,
+        hasCustomPrompt: !!customPrompt,
         selectedModel: selectedModel || 'default',
         hasUserApiKey: !!userApiKey
       });

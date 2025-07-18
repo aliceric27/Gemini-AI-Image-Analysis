@@ -29,6 +29,9 @@ export const AnalysisProvider = ({ children }) => {
     "tags": ["相關標籤"]
   }, null, 2));
   
+  // Custom prompt state
+  const [customPrompt, setCustomPrompt] = useState('');
+  
   // Results and UI state
   const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,6 +83,12 @@ export const AnalysisProvider = ({ children }) => {
     setError(null);
   };
 
+  // Custom prompt handlers
+  const handleCustomPromptChange = (prompt) => {
+    setCustomPrompt(prompt);
+    setError(null);
+  };
+
   // Results handlers
   const handleSetResults = (newResults) => {
     setResults(newResults);
@@ -98,6 +107,7 @@ export const AnalysisProvider = ({ children }) => {
     setUploadedImage(null);
     setResults(null);
     setError(null);
+    setCustomPrompt('');
     setJsonSchema(JSON.stringify({
       "description": "圖片的整體描述",
       "objects": ["識別到的物件列表"],
@@ -124,6 +134,7 @@ export const AnalysisProvider = ({ children }) => {
     selectedModel,
     saveApiKey,
     jsonSchema,
+    customPrompt,
     results,
     isLoading,
     error,
@@ -135,6 +146,7 @@ export const AnalysisProvider = ({ children }) => {
     handleModelChange,
     handleSaveApiKeyChange,
     handleJsonSchemaChange,
+    handleCustomPromptChange,
     handleSetResults,
     handleSetLoading,
     handleSetError,
@@ -142,13 +154,15 @@ export const AnalysisProvider = ({ children }) => {
     
     // Computed values
     canAnalyze: !!uploadedImage && !isLoading,
-    hasUserApiKey: !!apiKey.trim()
+    hasUserApiKey: !!apiKey.trim(),
+    hasCustomPrompt: !!customPrompt.trim()
   }), [
     uploadedImage,
     apiKey,
     selectedModel,
     saveApiKey,
     jsonSchema,
+    customPrompt,
     results,
     isLoading,
     error
