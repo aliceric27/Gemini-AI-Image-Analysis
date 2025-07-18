@@ -2425,3 +2425,299 @@ body {
     min-height: 250px;
   }
 }
+
+/* ========== Analysis Instructions Component ========== */
+.analysis-instructions {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.analysis-instructions-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.analysis-instructions-title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--gray-800);
+  margin: 0;
+}
+
+.analysis-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--gray-200);
+  background-color: var(--gray-50);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.analysis-tab {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-600);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border-bottom: 2px solid transparent;
+}
+
+.analysis-tab:first-child {
+  border-radius: var(--radius-md) 0 0 0;
+}
+
+.analysis-tab:last-child {
+  border-radius: 0 var(--radius-md) 0 0;
+}
+
+.analysis-tab:hover {
+  background-color: var(--gray-100);
+  color: var(--gray-700);
+}
+
+.analysis-tab.active {
+  background-color: var(--white);
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.analysis-tab svg {
+  width: 16px;
+  height: 16px;
+}
+
+.analysis-instructions-content {
+  flex: 1;
+  background-color: var(--white);
+  border: 1px solid var(--gray-200);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  overflow: hidden;
+}
+
+.analysis-tab-content {
+  padding: var(--space-4);
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Custom Prompt Styles */
+.custom-prompt-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-prompt-input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.custom-prompt-label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-700);
+  margin-bottom: var(--space-2);
+}
+
+.custom-prompt-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.custom-prompt-input {
+  width: 100%;
+  min-height: 300px;
+  padding: var(--space-3);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--gray-800);
+  background-color: var(--white);
+  transition: all 0.2s ease;
+  resize: vertical;
+}
+
+.custom-prompt-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.custom-prompt-input:disabled {
+  background-color: var(--gray-50);
+  cursor: not-allowed;
+}
+
+.custom-prompt-clear-btn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gray-100);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--gray-600);
+  transition: all 0.2s ease;
+}
+
+.custom-prompt-clear-btn:hover {
+  background-color: var(--gray-200);
+  color: var(--gray-800);
+}
+
+.custom-prompt-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.custom-prompt-counter {
+  font-size: var(--text-xs);
+  color: var(--gray-500);
+}
+
+.custom-prompt-warning {
+  font-size: var(--text-xs);
+  color: var(--warning-color);
+  font-weight: 500;
+}
+
+.custom-prompt-info {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--gray-200);
+}
+
+.custom-prompt-status {
+  margin-bottom: var(--space-3);
+}
+
+.custom-prompt-status-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.status-has-prompt {
+  background-color: #f0f9ff;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-light);
+}
+
+.status-no-prompt {
+  background-color: var(--gray-50);
+  color: var(--gray-600);
+  border: 1px solid var(--gray-200);
+}
+
+.custom-prompt-help {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.custom-prompt-description,
+.custom-prompt-tip {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.custom-prompt-description {
+  color: var(--gray-600);
+}
+
+.custom-prompt-tip {
+  color: var(--gray-500);
+  font-style: italic;
+}
+
+.analysis-instructions-footer {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--gray-50);
+  border-top: 1px solid var(--gray-200);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.analysis-mode-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--gray-600);
+}
+
+.mode-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.json-mode {
+  color: var(--primary-color);
+}
+
+.prompt-mode {
+  color: var(--secondary-color);
+}
+
+.mode-indicator svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Mobile Responsiveness for Analysis Instructions */
+@media (max-width: 768px) {
+  .analysis-instructions-header {
+    gap: var(--space-3);
+  }
+  
+  .analysis-instructions-title {
+    font-size: var(--text-lg);
+  }
+  
+  .analysis-tab {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+  
+  .analysis-tab-content {
+    padding: var(--space-3);
+  }
+  
+  .custom-prompt-input {
+    min-height: 200px;
+    font-size: var(--text-sm);
+  }
+  
+  .analysis-instructions-footer {
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  .analysis-mode-indicator {
+    font-size: var(--text-xs);
+  }
+}

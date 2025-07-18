@@ -1,6 +1,6 @@
 import { useAnalysis } from '../../context/AnalysisContext';
 import ImageUploader from '../upload/ImageUploader';
-import JsonSchemaInput from '../json/JsonSchemaInput';
+import AnalysisInstructions from '../analysis/AnalysisInstructions';
 import ResultsDisplay from '../results/ResultsDisplay';
 import ConfigPanel from '../ui/ConfigPanel';
 import { apiService, fileUtils } from '../../utils/apiService';
@@ -18,7 +18,6 @@ const MainContent = () => {
     canAnalyze,
     handleImageUpload,
     handleImageRemove,
-    handleJsonSchemaChange,
     handleSetResults,
     handleSetLoading,
     handleSetError
@@ -95,17 +94,12 @@ const MainContent = () => {
             </div>
           </div>
 
-          {/* Right Column - JSON Schema & Results */}
+          {/* Right Column - Analysis Instructions & Results */}
           <div className="right-column">
-            {/* JSON Structure Editor */}
-            <div className="section-card json-section animate-in-delay-2">
-              <h2 className="section-title">JSON 結構定義</h2>
+            {/* Analysis Instructions */}
+            <div className="section-card analysis-section animate-in-delay-2">
               <div className="section-content">
-                <JsonSchemaInput 
-                  value={jsonSchema}
-                  onChange={handleJsonSchemaChange}
-                  error={error}
-                />
+                <AnalysisInstructions />
               </div>
             </div>
 

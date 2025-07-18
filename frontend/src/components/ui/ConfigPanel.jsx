@@ -7,11 +7,9 @@ const ConfigPanel = () => {
     apiKey,
     selectedModel,
     saveApiKey,
-    customPrompt,
     handleApiKeyChange,
     handleModelChange,
     handleSaveApiKeyChange,
-    handleCustomPromptChange,
     isLoading
   } = useAnalysis();
 
@@ -66,13 +64,6 @@ const ConfigPanel = () => {
     handleSaveApiKeyChange(event.target.checked);
   };
 
-  const handleCustomPromptInputChange = (event) => {
-    handleCustomPromptChange(event.target.value);
-  };
-
-  const handleClearCustomPrompt = () => {
-    handleCustomPromptChange('');
-  };
 
   const handleRefreshModels = () => {
     fetchAvailableModels();
@@ -309,91 +300,6 @@ const ConfigPanel = () => {
         </div>
       </div>
 
-      {/* Custom Prompt Section */}
-      <div className="config-section">
-        <h3 className="config-section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          自訂提示詞設定
-        </h3>
-        <div className="custom-prompt-container">
-          <div className="custom-prompt-input-group">
-            <label htmlFor="custom-prompt-input" className="custom-prompt-label">
-              自定義分析提示詞
-            </label>
-            <div className="custom-prompt-input-wrapper">
-              <textarea
-                id="custom-prompt-input"
-                value={customPrompt}
-                onChange={handleCustomPromptInputChange}
-                placeholder="輸入您的自定義分析提示詞，例如：請詳細分析這張圖片中的人物情緒和肢體語言..."
-                className="custom-prompt-input"
-                disabled={isLoading}
-                rows="4"
-              />
-              {customPrompt && (
-                <button
-                  type="button"
-                  onClick={handleClearCustomPrompt}
-                  className="custom-prompt-clear-btn"
-                  title="清除提示詞"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
-              )}
-            </div>
-            <div className="custom-prompt-meta">
-              <span className="custom-prompt-counter">
-                {customPrompt.length} 字元
-              </span>
-              {customPrompt.length > 1000 && (
-                <span className="custom-prompt-warning">
-                  ⚠️ 提示詞過長可能影響性能
-                </span>
-              )}
-            </div>
-          </div>
-          
-          <div className="custom-prompt-info">
-            <div className="custom-prompt-status">
-              {customPrompt.trim() ? (
-                <div className="custom-prompt-status-item status-has-prompt">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                  <span>已設定自訂提示詞（優先級高於 JSON 結構）</span>
-                </div>
-              ) : (
-                <div className="custom-prompt-status-item status-no-prompt">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
-                  </svg>
-                  <span>使用系統預設提示詞（一般分析或 JSON 結構分析）</span>
-                </div>
-              )}
-            </div>
-            
-            <div className="custom-prompt-help">
-              <p className="custom-prompt-description">
-                自訂提示詞允許您精確控制 AI 分析的內容和方式。當設定自訂提示詞時，將優先使用您的提示詞而非系統預設的分析指令。
-              </p>
-              <p className="custom-prompt-tip">
-                提示：您可以在自訂提示詞中要求特定的 JSON 格式輸出，或者結合使用 JSON 結構定義功能。
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
